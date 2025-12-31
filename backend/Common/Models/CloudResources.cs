@@ -1,3 +1,5 @@
+namespace CloudAdvisor.Common.Models;
+
 public class CloudResource
 {
     public string Id { get; set; } = default!;

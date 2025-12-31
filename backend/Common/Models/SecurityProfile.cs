@@ -1,3 +1,5 @@
+namespace CloudAdvisor.Common.Models;
+
 public class SecurityProfile
 {
     public bool PubliclyAccessible { get; set; }
