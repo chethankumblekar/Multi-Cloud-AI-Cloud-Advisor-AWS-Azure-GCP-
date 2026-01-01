@@ -1,0 +1,13 @@
+backend/CloudAdvisor.Ai/bin
+backend/CloudAdvisor.Ai/obj
+backend/CloudAdvisor.Api/bin
+backend/CloudAdvisor.Api/obj
+backend/CloudAdvisor.Common/bin
+backend/CloudAdvisor.Common/obj
+backend/CloudAdvisor.Parsers/bin
+backend/CloudAdvisor.Parsers/obj
+backend/CloudAdvisor.Persistence/bin
+backend/CloudAdvisor.Persistence/obj
+backend/CloudAdvisor.RuleEngine/bin
+backend/CloudAdvisor.RuleEngine/obj
+

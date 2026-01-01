@@ -1,3 +1,5 @@
+using CloudAdvisor.Common.Enums;
+
 namespace CloudAdvisor.Common.Models;
 
 public class CloudEnvironment
