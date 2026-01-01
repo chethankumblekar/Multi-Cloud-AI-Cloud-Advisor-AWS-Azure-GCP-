@@ -22,7 +22,12 @@ public class RootModule
 
 public class TerraformResource
 {
+    [JsonPropertyName("type")]
     public string Type { get; set; } = default!;
+
+    [JsonPropertyName("name")]
     public string Name { get; set; } = default!;
+
+    [JsonPropertyName("values")]
     public Dictionary<string, object> Values { get; set; } = new();
 }
