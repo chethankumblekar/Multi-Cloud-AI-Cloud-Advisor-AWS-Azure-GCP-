@@ -8,6 +8,7 @@ builder.Host.UseSerilog((ctx, lc) =>
 
 // ---------- Services ----------
 builder.Services.AddControllers();
+builder.Services.AddScoped<ICloudParser, AwsTerraformParser>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
