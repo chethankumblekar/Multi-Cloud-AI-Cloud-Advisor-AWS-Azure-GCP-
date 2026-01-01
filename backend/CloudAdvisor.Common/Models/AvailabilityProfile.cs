@@ -1,3 +1,5 @@
+namespace CloudAdvisor.Common.Models;
+
 public class AvailabilityProfile
 {
     public bool IsMultiZone { get; set; }

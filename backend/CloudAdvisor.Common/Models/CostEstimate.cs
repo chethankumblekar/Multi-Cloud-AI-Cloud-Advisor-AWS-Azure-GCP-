@@ -1,3 +1,5 @@
+namespace CloudAdvisor.Common.Models;
+
 public class CostEstimate
 {
     public decimal MonthlyUsd { get; set; }

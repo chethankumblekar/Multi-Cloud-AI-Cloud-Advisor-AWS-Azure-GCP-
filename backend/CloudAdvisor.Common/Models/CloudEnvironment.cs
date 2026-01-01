@@ -1,3 +1,7 @@
+using CloudAdvisor.Common.Enums;
+
+namespace CloudAdvisor.Common.Models;
+
 public class CloudEnvironment
 {
     public CloudProvider Provider { get; set; }
