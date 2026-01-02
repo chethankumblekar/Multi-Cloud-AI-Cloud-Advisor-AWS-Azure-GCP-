@@ -5,6 +5,10 @@ using CloudAdvisor.Api.Controllers.Models;
 using CloudAdvisor.Ai.Interfaces;
 using CloudAdvisor.Ai.Models;
 using CloudAdvisor.Ai.Prompting;
+using CloudAdvisor.Parsers.Azure;
+using CloudAdvisor.Parsers.Gcp;
+using CloudAdvisor.Parsers.Factory;
+using CloudAdvisor.Common.Enums;
 
 namespace CloudAdvisor.Api.Controllers;
 
@@ -12,25 +16,35 @@ namespace CloudAdvisor.Api.Controllers;
 [Route("api/analyze")]
 public class AnalysisController : ControllerBase
 {
-    private readonly ICloudParser _parser;
+    private readonly ICloudParserFactory _parserFactory;
     private readonly RuleEngine.RuleEngine _ruleEngine;
     private readonly IAiClient _aiClient;
 
     public AnalysisController(
-    ICloudParser parser,
+    ICloudParserFactory parserFactory,
     RuleEngine.RuleEngine ruleEngine,
     IAiClient aiClient)
     {
-        _parser = parser;
+        _parserFactory = parserFactory;
         _ruleEngine = ruleEngine;
         _aiClient = aiClient;
     }
 
-    [HttpPost("aws/terraform")]
-    public async Task<IActionResult> AnalyzeAwsTerraform(
-    [FromBody] AwsTerraformRequest request)
+    [HttpPost("{cloud}/terraform")]
+    public async Task<IActionResult> AnalyzeTerraform(
+        string cloud,
+        [FromBody] AwsTerraformRequest request)
     {
-        var environment = _parser.Parse(request.TerraformPlanJson);
+        if (string.IsNullOrWhiteSpace(request.TerraformPlanJson))
+            return BadRequest("Terraform plan JSON is required");
+
+        if (!Enum.TryParse<CloudType>(cloud, true, out var cloudType))
+            return BadRequest("Unsupported cloud type");
+
+        var parser = _parserFactory.GetParser(cloudType);
+
+        var environment = parser.Parse(request.TerraformPlanJson);
+
         var findings = _ruleEngine.Evaluate(environment);
 
         var explanations = new List<AiExplanation>();
@@ -56,4 +70,6 @@ public class AnalysisController : ControllerBase
             Explanations = explanations
         });
     }
+
+
 }

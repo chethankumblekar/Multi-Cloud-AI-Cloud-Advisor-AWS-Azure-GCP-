@@ -10,6 +10,8 @@ export interface Environment {
 }
 
 export interface CloudResource {
+  security: any;
+  availability: any;
   category: number;
   id: string;
   serviceName: string;
@@ -17,6 +19,7 @@ export interface CloudResource {
 }
 
 export interface Finding {
+  resource: any;
   category: any;
   title: string;
   description: string;

@@ -1,11 +1,17 @@
 import axios from "axios";
 
-export const analyzeAwsTerraform = async (terraformJson: string) => {
+const API_BASE = "http://localhost:5189/api/analyze";
+
+export const analyzeTerraform = async (
+  cloud: "aws" | "azure" | "gcp",
+  terraformJson: string
+) => {
   const response = await axios.post(
-    "http://localhost:5189/api/analyze/aws/terraform",
+    `${API_BASE}/${cloud}/terraform`,
     {
-      terraformPlanJson: terraformJson
+      terraformPlanJson: terraformJson,
     }
   );
+
   return response.data;
 };

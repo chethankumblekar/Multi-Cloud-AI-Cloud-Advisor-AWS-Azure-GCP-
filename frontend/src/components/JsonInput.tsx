@@ -8,7 +8,22 @@ interface Props {
 const SAMPLE_JSON = `{
   "planned_values": {
     "root_module": {
-      "resources": []
+      "resources": [
+        {
+          "type": "aws_instance",
+          "name": "web_server",
+          "values": {
+            "instance_type": "t3.medium",
+            "availability_zone": "us-east-1a",
+            "associate_public_ip_address": true
+          }
+        },
+        {
+          "type": "aws_s3_bucket",
+          "name": "app_bucket",
+          "values": {}
+        }
+      ]
     }
   }
 }`;
