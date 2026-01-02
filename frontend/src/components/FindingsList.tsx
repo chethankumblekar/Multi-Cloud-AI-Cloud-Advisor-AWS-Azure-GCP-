@@ -1,43 +1,34 @@
 import type { Finding } from "../models/AnalysisResult";
 import SeverityBadge from "./SeverityBadge";
-import { groupFindingsByCategory } from "../utils/groupFindings";
-
-const categoryNames: Record<number, string> = {
-  0: "High Availability",
-  1: "Cost Optimization",
-  2: "Security",
-};
+import Card from "./ui/Card";
+import SectionHeader from "./ui/SectionHeader";
 
 export default function FindingsList({ findings }: { findings: Finding[] }) {
-  const grouped = groupFindingsByCategory(findings);
-
   return (
-    <div>
-      <h3>Findings</h3>
+    <Card>
+      <SectionHeader title="Findings" />
 
-      {Object.entries(grouped).map(([category, items]) => (
-        <div key={category}>
-          <h4>{categoryNames[Number(category)]}</h4>
+      {findings.map((f, i) => (
+        <div
+          key={i}
+          style={{
+            borderLeft: `6px solid var(--severity-high)`,
+            paddingLeft: 12,
+            marginBottom: 12,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <strong style={{ color: "var(--text-primary)" }}>
+              {f.title}
+            </strong>
+            <SeverityBadge severity={f.severity} />
+          </div>
 
-          {items.map((f, i) => (
-            <div
-              key={i}
-              style={{
-                border: "1px solid #ddd",
-                margin: "8px 0",
-                padding: 10,
-                borderRadius: 6,
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <strong>{f.title}</strong>
-                <SeverityBadge severity={f.severity} />
-              </div>
-              <p>{f.description}</p>
-            </div>
-          ))}
+          <p style={{ color: "var(--text-secondary)", marginTop: 6 }}>
+            {f.description}
+          </p>
         </div>
       ))}
-    </div>
+    </Card>
   );
 }

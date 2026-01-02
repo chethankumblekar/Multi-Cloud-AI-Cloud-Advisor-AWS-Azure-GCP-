@@ -4,6 +4,8 @@ import type { AnalysisResult } from "../models/AnalysisResult";
 import JsonInput from "../components/JsonInput";
 import FindingsList from "../components/FindingsList";
 import Explanations from "../components/Explanations";
+import ResourceSummary from "../components/ResourceSummary";
+
 
 export default function Home() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
@@ -36,10 +38,12 @@ const analyze = async (json: string) => {
 
       {result && (
         <>
+          <ResourceSummary result={result} />
           <FindingsList findings={result.findings} />
           <Explanations explanations={result.explanations} />
         </>
       )}
+
     </div>
   );
 }

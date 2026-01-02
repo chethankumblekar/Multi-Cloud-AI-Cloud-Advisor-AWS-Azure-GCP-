@@ -10,6 +10,7 @@ export interface Environment {
 }
 
 export interface CloudResource {
+  category: number;
   id: string;
   serviceName: string;
   sizeTier: string;
