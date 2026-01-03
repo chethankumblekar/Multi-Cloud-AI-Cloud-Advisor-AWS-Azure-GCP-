@@ -1,14 +1,12 @@
-using CloudAdvisor.Common.Models;
-using CloudAdvisor.Parsers;
 using Microsoft.AspNetCore.Mvc;
 using CloudAdvisor.Api.Controllers.Models;
 using CloudAdvisor.Ai.Interfaces;
 using CloudAdvisor.Ai.Models;
 using CloudAdvisor.Ai.Prompting;
-using CloudAdvisor.Parsers.Azure;
-using CloudAdvisor.Parsers.Gcp;
 using CloudAdvisor.Parsers.Factory;
 using CloudAdvisor.Common.Enums;
+using CloudAdvisor.RuleEngine.Scoring;
+
 
 namespace CloudAdvisor.Api.Controllers;
 
@@ -46,19 +44,20 @@ public class AnalysisController : ControllerBase
         var environment = parser.Parse(request.TerraformPlanJson);
 
         var findings = _ruleEngine.Evaluate(environment);
+        var finOpsScore = FinOpsScorer.Calculate(findings);
+
 
         var explanations = new List<AiExplanation>();
 
         foreach (var finding in findings)
         {
-            var prompt = FindingPromptBuilder.Build(finding);
+            var prompt = FindingPromptBuilder.Build(finding, finOpsScore);
             var aiText = await _aiClient.GetExplanationAsync(prompt);
 
-            explanations.Add(new AiExplanation
+            explanations.Add(new AiExplanation  
             {
                 Category = finding.Category,
                 Severity = finding.Severity,
-                Summary = aiText,
                 Recommendation = aiText
             });
         }
@@ -67,7 +66,8 @@ public class AnalysisController : ControllerBase
         {
             Environment = environment,
             Findings = findings,
-            Explanations = explanations
+            Explanations = explanations,
+            FinOpsScore = finOpsScore
         });
     }
 

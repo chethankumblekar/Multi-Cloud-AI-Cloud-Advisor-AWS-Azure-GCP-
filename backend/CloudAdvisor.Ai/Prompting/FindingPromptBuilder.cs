@@ -5,31 +5,39 @@ namespace CloudAdvisor.Ai.Prompting;
 
 public static class FindingPromptBuilder
 {
-    public static string Build(Finding finding)
+    public static string Build(
+        Finding finding,
+        FinOpsScore finOpsScore)
     {
         return $"""
-        You are a senior cloud architect.
+You are a senior cloud architect and FinOps advisor.
 
-        Analyze the following cloud architecture issue and explain it clearly.
+Overall environment cost context:
+- FinOps Cost Risk Score: {finOpsScore.Score}/100
+- Risk Level: {finOpsScore.RiskLevel}
+- Summary: {finOpsScore.Summary}
 
-        Rule Category: {finding.Category}
-        Severity: {finding.Severity}
+Analyze the following cloud architecture issue in this context.
 
-        Resource:
-        - Provider: {finding.Resource.Provider}
-        - Service: {finding.Resource.ServiceName}
-        - Region: {finding.Resource.Availability.Region}
-        - Multi-Zone: {finding.Resource.Availability.IsMultiZone}
-        - Publicly Accessible: {finding.Resource.Security.PubliclyAccessible}
-        - Monthly Cost (USD): {finding.Resource.Cost.MonthlyUsd}
+Rule Category: {finding.Category}
+Severity: {finding.Severity}
 
-        Explain in simple terms:
-        1. What is the problem
-        2. Why it matters in production
-        3. How to fix it (specific to the cloud provider)
-        4. Cost vs reliability/security trade-offs
+Affected Resource:
+- Provider: {finding.Resource.Provider}
+- Service: {finding.Resource.ServiceName}
+- Region: {finding.Resource.Availability.Region}
+- Multi-Zone: {finding.Resource.Availability.IsMultiZone}
+- Publicly Accessible: {finding.Resource.Security.PubliclyAccessible}
+- Monthly Cost (USD): {finding.Resource.Cost.MonthlyUsd}
 
-        Keep the explanation concise and practical.
-        """;
+Explain clearly:
+1. What the problem is
+2. Why it matters in production and cost efficiency
+3. How to fix it (cloud-agnostic where possible, provider-specific only if necessary)
+4. Cost vs reliability/security trade-offs
+5. Priority of this fix given the overall FinOps risk
+
+Use concise, practical Markdown. Avoid generic advice.
+""";
     }
 }

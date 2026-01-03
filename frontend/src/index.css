@@ -1,3 +1,7 @@
+html{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg-page);
+}
 :root {
   /* Layout */
   --bg-page: #f8fafc;
@@ -23,4 +27,33 @@
 
   /* Shadows */
   --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  /* Page & surfaces */
+  --bg-page: #0e0f12;        /* deep obsidian */
+  --bg-card: #15171c;        /* lifted surface */
+  --bg-input: #0f1115;       /* inset / glossy input */
+
+  /* Text */
+  --text-primary: #f4f4f5;   /* near-white, not blue */
+  --text-secondary: #a1a1aa; /* neutral gray */
+
+  /* Borders & dividers */
+  --border-default: #26272b; /* subtle graphite line */
+  --border-focus: #22c55e;
+
+  /* Primary accent (emerald / jade) */
+  --primary: #22c55e;        /* emerald */
+  --primary-hover: #16a34a;
+
+  /* Severity */
+  --severity-low: #22c55e;   /* emerald */
+  --severity-medium: #f59e0b;/* amber */
+  --severity-high: #ef4444;  /* red */
+
+  /* Shadows (glossy depth) */
+  --shadow-card: 
+    0 8px 24px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }

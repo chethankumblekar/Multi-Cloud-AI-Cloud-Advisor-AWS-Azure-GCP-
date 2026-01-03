@@ -2,6 +2,7 @@ export interface AnalysisResult {
   environment: Environment;
   findings: Finding[];
   explanations: AiExplanation[];
+  finOpsScore: FinOpsScore;
 }
 
 export interface Environment {
@@ -29,4 +30,10 @@ export interface Finding {
 export interface AiExplanation {
   summary: string;
   recommendation: string;
+}
+
+export interface FinOpsScore {
+  score: number;
+  riskLevel: "Low" | "Medium" | "High";
+  summary: string;
 }
