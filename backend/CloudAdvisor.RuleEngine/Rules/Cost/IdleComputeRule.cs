@@ -4,7 +4,7 @@ using CloudAdvisor.RuleEngine.Models;
 
 namespace CloudAdvisor.RuleEngine.Rules.Cost;
 
-public class OversizedComputeRule : IRule
+public class IdleComputeRule : IRule
 {
     public RuleCategory Category => RuleCategory.CostOptimization;
 
@@ -15,16 +15,19 @@ public class OversizedComputeRule : IRule
             if (resource.Category != ResourceCategory.Compute)
                 continue;
 
-            if (resource.Cost.MonthlyUsd > 80 &&
+            if (resource.Cost.MonthlyUsd < 20)
+                continue;
+
+            if (!resource.Security.PubliclyAccessible &&
                 !resource.Availability.IsMultiZone)
             {
                 yield return new Finding
                 {
                     Category = Category,
                     Severity = Severity.Medium,
-                    Title = "Potentially oversized compute",
+                    Title = "Potentially idle compute resource",
                     Description =
-                        "Compute resource cost appears high without high availability requirements. Consider right-sizing.",
+                        "Compute resource shows characteristics of low utilization. Consider downsizing or scheduling shutdown.",
                     Resource = resource
                 };
             }

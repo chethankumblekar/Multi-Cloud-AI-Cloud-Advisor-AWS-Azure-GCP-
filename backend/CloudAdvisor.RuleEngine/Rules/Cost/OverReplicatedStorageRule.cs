@@ -4,7 +4,7 @@ using CloudAdvisor.RuleEngine.Models;
 
 namespace CloudAdvisor.RuleEngine.Rules.Cost;
 
-public class OversizedComputeRule : IRule
+public class OverReplicatedStorageRule : IRule
 {
     public RuleCategory Category => RuleCategory.CostOptimization;
 
@@ -12,19 +12,19 @@ public class OversizedComputeRule : IRule
     {
         foreach (var resource in environment.Resources)
         {
-            if (resource.Category != ResourceCategory.Compute)
+            if (resource.Category != ResourceCategory.Storage)
                 continue;
 
-            if (resource.Cost.MonthlyUsd > 80 &&
-                !resource.Availability.IsMultiZone)
+            if (resource.Availability.AvailabilityZones >= 3 &&
+                resource.Cost.MonthlyUsd < 10)
             {
                 yield return new Finding
                 {
                     Category = Category,
-                    Severity = Severity.Medium,
-                    Title = "Potentially oversized compute",
+                    Severity = Severity.Low,
+                    Title = "Possibly over-replicated storage",
                     Description =
-                        "Compute resource cost appears high without high availability requirements. Consider right-sizing.",
+                        "Storage appears highly replicated for low usage. Consider reducing replication for non-critical data.",
                     Resource = resource
                 };
             }

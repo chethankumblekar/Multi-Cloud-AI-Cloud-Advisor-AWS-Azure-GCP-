@@ -27,6 +27,8 @@ builder.Services.AddScoped<ICloudParserFactory, CloudParserFactory>();
 builder.Services.AddScoped<IRule, SingleZoneComputeRule>();
 builder.Services.AddScoped<IRule, OversizedComputeRule>();
 builder.Services.AddScoped<IRule, PublicComputeRule>();
+builder.Services.AddScoped<IRule, IdleComputeRule>();
+builder.Services.AddScoped<IRule, OverReplicatedStorageRule>();
 
 builder.Services.AddSingleton<IAiClient>(_ =>
     new OpenAiClient(builder.Configuration["OpenAI:ApiKey"]!));
