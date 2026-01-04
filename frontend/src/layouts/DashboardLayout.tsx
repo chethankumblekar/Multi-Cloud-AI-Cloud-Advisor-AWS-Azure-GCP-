@@ -75,9 +75,7 @@ export default function DashboardLayout({
                           ? "1px solid var(--primary)"
                           : "1px solid var(--border-default)",
                       background:
-                        cloud === c.key
-                          ? "var(--bg-input)"
-                          : "var(--bg-card)",
+                        cloud === c.key ? "var(--bg-input)" : "var(--bg-card)",
                       cursor: "pointer",
                       fontSize: 13,
                       fontWeight: cloud === c.key ? 600 : 400,

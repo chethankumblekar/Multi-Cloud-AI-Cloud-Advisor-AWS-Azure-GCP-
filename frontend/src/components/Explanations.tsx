@@ -10,10 +10,7 @@ interface Props {
   severities?: number[];
 }
 
-export default function Explanations({
-  explanations,
-  severities = [],
-}: Props) {
+export default function Explanations({ explanations, severities = [] }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   if (explanations.length === 0) {
@@ -71,10 +68,9 @@ export default function Explanations({
                 padding: "12px 14px",
                 borderRadius: 8,
                 background: "var(--bg-input)",
-                border: "1px solid var(--border-default)", // 🔑 separation
+                border: "1px solid var(--border-default)",
               }}
             >
-              {/* Recommendation header */}
               <div
                 style={{
                   display: "flex",
@@ -97,7 +93,6 @@ export default function Explanations({
                 )}
               </div>
 
-              {/* Markdown */}
               <div
                 style={{
                   fontSize: 13,

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { TERRAFORM_SAMPLES } from "../samples/terraformSamples";
-import { detectCloudFromTerraform, type Cloud } from "../utils/detectCloudFromTerraform";
-
+import {
+  detectCloudFromTerraform,
+  type Cloud,
+} from "../utils/detectCloudFromTerraform";
 
 interface Props {
   cloud: "aws" | "azure" | "gcp";
@@ -9,7 +11,6 @@ interface Props {
   onDetectCloud?: (cloud: Cloud) => void;
   loading?: boolean;
 }
-
 
 export default function InputJson({
   cloud,
@@ -63,18 +64,16 @@ export default function InputJson({
       <textarea
         value={json}
         onChange={(e) => {
-    const value = e.target.value;
+          const value = e.target.value;
           setJson(value);
           const detected = detectCloudFromTerraform(value);
 
-if (detected === "invalid") {
-  onDetectCloud?.("invalid" as any);
-} else if (detected && detected !== cloud) {
-  onDetectCloud?.(detected);
-}
-
+          if (detected === "invalid") {
+            onDetectCloud?.("invalid" as any);
+          } else if (detected && detected !== cloud) {
+            onDetectCloud?.(detected);
+          }
         }}
-        
         rows={14}
         spellCheck={false}
         style={{
@@ -122,9 +121,7 @@ if (detected === "invalid") {
           disabled={loading}
           onClick={() => onAnalyze(json)}
           style={{
-            background: loading
-              ? "var(--border-default)"
-              : "var(--primary)",
+            background: loading ? "var(--border-default)" : "var(--primary)",
             color: "#ffffff",
             border: "none",
             padding: "10px 18px",

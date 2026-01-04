@@ -6,20 +6,19 @@ export function useTheme() {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // 1. Check saved preference
     const saved = localStorage.getItem("theme") as Theme | null;
     if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTheme(saved);
       document.documentElement.setAttribute("data-theme", saved);
       return;
     }
 
-    // 2. Check system preference
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
 
-    const initialTheme: Theme = prefersDark ? "dark" : "dark"; // default dark
+    const initialTheme: Theme = prefersDark ? "dark" : "dark";
     setTheme(initialTheme);
     document.documentElement.setAttribute("data-theme", initialTheme);
   }, []);

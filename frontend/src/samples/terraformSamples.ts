@@ -68,5 +68,5 @@ export const TERRAFORM_SAMPLES: Record<"aws" | "azure" | "gcp", string> = {
       ]
     }
   }
-}`
+}`,
 };

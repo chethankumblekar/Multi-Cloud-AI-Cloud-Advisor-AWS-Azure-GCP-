@@ -88,25 +88,15 @@ export default function ResourceTable({ resources, onSelect }: Props) {
                     (e.currentTarget.style.background = "transparent")
                   }
                 >
-                  <Td>
-                    {r.id}
-                  </Td>
+                  <Td>{r.id}</Td>
 
-                  <Td >
-                    {resolveCategory(r.category)}
-                  </Td>
+                  <Td>{resolveCategory(r.category)}</Td>
 
-                  <Td >
-                    {r.serviceName}
-                  </Td>
+                  <Td>{r.serviceName}</Td>
 
-                  <Td >
-                    {r.sizeTier}
-                  </Td>
+                  <Td>{r.sizeTier}</Td>
 
-                  <Td >
-                    {r.availability.region}
-                  </Td>
+                  <Td>{r.availability.region}</Td>
                 </tr>
               ))}
             </tbody>

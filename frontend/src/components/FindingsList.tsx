@@ -76,12 +76,8 @@ export default function FindingsList({ findings, onSelectResource }: Props) {
                 border: active
                   ? "1px solid var(--primary)"
                   : "1px solid var(--border-default)",
-                background: active
-                  ? "var(--bg-input)"
-                  : "var(--bg-card)",
-                color: active
-                  ? "var(--text-primary)"
-                  : "var(--text-secondary)",
+                background: active ? "var(--bg-input)" : "var(--bg-card)",
+                color: active ? "var(--text-primary)" : "var(--text-secondary)",
                 fontSize: 13,
                 fontWeight: active ? 600 : 500,
                 cursor: "pointer",

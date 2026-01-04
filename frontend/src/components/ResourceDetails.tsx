@@ -9,9 +9,7 @@ interface Props {
 }
 
 export default function ResourceDetails({ resource, findings }: Props) {
-  const relatedFindings = findings.filter(
-    (f) => f.resource.id === resource.id
-  );
+  const relatedFindings = findings.filter((f) => f.resource.id === resource.id);
 
   return (
     <Card>
@@ -64,9 +62,7 @@ export default function ResourceDetails({ resource, findings }: Props) {
           <Label>Availability</Label>
           <Value>
             {resource.availability.isMultiZone ? (
-              <span style={{ color: "var(--severity-low)" }}>
-                Multi-Zone
-              </span>
+              <span style={{ color: "var(--severity-low)" }}>Multi-Zone</span>
             ) : (
               <span style={{ color: "var(--severity-medium)" }}>
                 Single-Zone
@@ -120,7 +116,9 @@ export default function ResourceDetails({ resource, findings }: Props) {
                 gap: 8,
               }}
             >
-              <strong style={{ fontSize: 14, color: "var(--text-secondary)" }}>{f.title}</strong>
+              <strong style={{ fontSize: 14, color: "var(--text-secondary)" }}>
+                {f.title}
+              </strong>
               <SeverityBadge severity={f.severity} />
             </div>
 

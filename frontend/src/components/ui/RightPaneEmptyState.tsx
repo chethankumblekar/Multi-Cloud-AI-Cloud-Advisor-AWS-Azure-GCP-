@@ -1,4 +1,3 @@
-
 import Card from "./Card";
 
 export default function RightPaneEmptyState() {
@@ -18,8 +17,8 @@ export default function RightPaneEmptyState() {
         </h4>
 
         <p style={{ fontSize: 14, lineHeight: 1.5 }}>
-          Select a finding on the left or a resource from the inventory
-          to view configuration details and AI-powered recommendations.
+          Select a finding on the left or a resource from the inventory to view
+          configuration details and AI-powered recommendations.
         </p>
       </div>
     </Card>

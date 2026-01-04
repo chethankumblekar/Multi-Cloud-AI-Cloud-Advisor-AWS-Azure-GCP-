@@ -1,13 +1,10 @@
-
 export type Cloud = "aws" | "azure" | "gcp" | "invalid" | null;
-
 
 export function detectCloudFromTerraform(json: string): Cloud {
   try {
     const parsed = JSON.parse(json);
 
-    const resources =
-      parsed?.planned_values?.root_module?.resources;
+    const resources = parsed?.planned_values?.root_module?.resources;
 
     if (!Array.isArray(resources)) {
       return null;
@@ -24,4 +21,3 @@ export function detectCloudFromTerraform(json: string): Cloud {
     return "invalid";
   }
 }
-

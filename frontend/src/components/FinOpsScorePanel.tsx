@@ -12,11 +12,7 @@ const riskColorMap = {
   High: "var(--severity-high)",
 };
 
-export default function FinOpsScorePanel({
-  score,
-  riskLevel,
-  summary,
-}: Props) {
+export default function FinOpsScorePanel({ score, riskLevel, summary }: Props) {
   const color = riskColorMap[riskLevel];
 
   return (
@@ -28,13 +24,12 @@ export default function FinOpsScorePanel({
           gap: 16,
         }}
       >
-        {/* Score badge */}
         <div
           style={{
             minWidth: 56,
             height: 56,
             borderRadius: 12,
-            background: color + "20", // soft tint
+            background: color + "20",
             color: color,
             display: "flex",
             flexDirection: "column",
@@ -44,12 +39,9 @@ export default function FinOpsScorePanel({
           }}
         >
           <div style={{ fontSize: 20 }}>{score}</div>
-          <div style={{ fontSize: 10, fontWeight: 500 }}>
-            Risk
-          </div>
+          <div style={{ fontSize: 10, fontWeight: 500 }}>Risk</div>
         </div>
 
-        {/* Text */}
         <div>
           <div
             style={{

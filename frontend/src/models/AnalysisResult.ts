@@ -1,4 +1,3 @@
-
 export interface AnalysisResult {
   environment: Environment;
   findings: Finding[];
@@ -6,14 +5,12 @@ export interface AnalysisResult {
   finOpsScore: FinOpsScore;
 }
 
-
 export interface Environment {
   provider: CloudProvider;
   resources: CloudResource[];
 }
 
 export type CloudProvider = 0 | 1 | 2; // AWS | Azure | GCP
-
 
 export interface CloudResource {
   id: string;
@@ -25,7 +22,6 @@ export interface CloudResource {
 }
 
 export type ResourceCategory = 0 | 1 | 2 | 3; // Compute | Storage | Database | Network (etc)
-
 
 export interface Availability {
   region: string;
@@ -39,7 +35,6 @@ export interface Security {
   usesManagedIdentity?: boolean;
 }
 
-
 export interface Finding {
   resource: CloudResource;
   category: RuleCategory;
@@ -51,11 +46,9 @@ export interface Finding {
 export type RuleCategory = number; // keep numeric to match backend enum
 export type Severity = 0 | 1 | 2; // Low | Medium | High
 
-
 export interface AiExplanation {
-  markdown: string; // single source of truth
+  markdown: string;
 }
-
 
 export interface FinOpsScore {
   score: number;

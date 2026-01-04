@@ -33,10 +33,9 @@ export default function ControlRoomLayout({
           gridTemplateColumns: "1.2fr 0.8fr",
           gap: 16,
           alignItems: "start",
-          alignContent: "start",   
+          alignContent: "start",
         }}
       >
-
         {/* LEFT PANE */}
         <div>{left}</div>
 

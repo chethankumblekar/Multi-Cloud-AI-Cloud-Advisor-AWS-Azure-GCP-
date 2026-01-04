@@ -1,18 +1,25 @@
-import axios from "axios";
-import type { Cloud } from "../utils/detectCloudFromTerraform";
+import { API_BASE_URL } from "../config/api";
 
-const API_BASE = "http://localhost:5189/api/analyze";
-
-export const analyzeTerraform = async (
-  cloud: Cloud,
-  terraformJson: string
-) => {
-  const response = await axios.post(
-    `${API_BASE}/${cloud}/terraform`,
+export async function analyzeTerraform(
+  cloud: "aws" | "azure" | "gcp",
+  json: string
+) {
+  const res = await fetch(
+    `${API_BASE_URL}/api/analyze/${cloud}/terraform`,
     {
-      terraformPlanJson: terraformJson,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        terraformPlanJson: json,
+      }),
     }
   );
 
-  return response.data;
-};
+  if (!res.ok) {
+    throw new Error("Analysis failed");
+  }
+
+  return res.json();
+}
