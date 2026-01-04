@@ -58,7 +58,7 @@ public class AnalysisController : ControllerBase
             {
                 Category = finding.Category,
                 Severity = finding.Severity,
-                Recommendation = aiText
+                Markdown = aiText
             });
         }
 

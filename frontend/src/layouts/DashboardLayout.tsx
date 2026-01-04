@@ -1,14 +1,21 @@
 import type { ReactNode } from "react";
 import { useTheme } from "../hooks/useTheme";
+import type { CloudOption } from "../models/AnalysisResult";
 
 export default function DashboardLayout({
   title,
   subtitle,
   children,
+  cloud,
+  clouds,
+  onCloudChange,
 }: {
   title: string;
   subtitle: string;
   children: ReactNode;
+  cloud?: "aws" | "azure" | "gcp";
+  clouds?: CloudOption[];
+  onCloudChange?: (cloud: "aws" | "azure" | "gcp") => void;
 }) {
   const { toggle } = useTheme();
 
@@ -27,8 +34,10 @@ export default function DashboardLayout({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            gap: 16,
           }}
         >
+          {/* Title */}
           <h1
             style={{
               margin: 0,
@@ -40,19 +49,71 @@ export default function DashboardLayout({
             {title}
           </h1>
 
-          <button
-            onClick={toggle}
+          {/* Right controls */}
+          <div
             style={{
-              padding: "6px 10px",
-              borderRadius: 6,
-              border: "1px solid var(--border-default)",
-              background: "var(--bg-card)",
-              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
             }}
-            title="Toggle dark mode"
           >
-            🌙
-          </button>
+            {/* Cloud selector */}
+            {clouds && cloud && onCloudChange && (
+              <div style={{ display: "flex", gap: 8 }}>
+                {clouds.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() => onCloudChange(c.key)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "6px 12px",
+                      borderRadius: 8,
+                      border:
+                        cloud === c.key
+                          ? "1px solid var(--primary)"
+                          : "1px solid var(--border-default)",
+                      background:
+                        cloud === c.key
+                          ? "var(--bg-input)"
+                          : "var(--bg-card)",
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: cloud === c.key ? 600 : 400,
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    <img
+                      src={c.icon}
+                      alt={c.label}
+                      style={{
+                        width: 16,
+                        height: 16,
+                        filter: "var(--icon-filter, none)",
+                      }}
+                    />
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Theme toggle */}
+            <button
+              onClick={toggle}
+              style={{
+                padding: "6px 10px",
+                borderRadius: 6,
+                border: "1px solid var(--border-default)",
+                background: "var(--bg-card)",
+                cursor: "pointer",
+              }}
+              title="Toggle dark mode"
+            >
+              🌙
+            </button>
+          </div>
         </div>
 
         <p

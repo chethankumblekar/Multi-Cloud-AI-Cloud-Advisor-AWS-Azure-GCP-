@@ -1,35 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { TERRAFORM_SAMPLES } from "../samples/terraformSamples";
+import { detectCloudFromTerraform, type Cloud } from "../utils/detectCloudFromTerraform";
+
 
 interface Props {
+  cloud: "aws" | "azure" | "gcp";
   onAnalyze: (json: string) => void;
+  onDetectCloud?: (cloud: Cloud) => void;
   loading?: boolean;
 }
 
-const SAMPLE_JSON = `{
-  "planned_values": {
-    "root_module": {
-      "resources": [
-        {
-          "type": "aws_instance",
-          "name": "web_server",
-          "values": {
-            "instance_type": "t3.medium",
-            "availability_zone": "us-east-1a",
-            "associate_public_ip_address": true
-          }
-        },
-        {
-          "type": "aws_s3_bucket",
-          "name": "app_bucket",
-          "values": {}
-        }
-      ]
-    }
-  }
-}`;
 
-export default function InputJson({ onAnalyze, loading = false }: Props) {
-  const [json, setJson] = useState(SAMPLE_JSON);
+export default function InputJson({
+  cloud,
+  onAnalyze,
+  onDetectCloud,
+  loading = false,
+}: Props) {
+  const [json, setJson] = useState(TERRAFORM_SAMPLES[cloud]);
+
+  /* Load sample automatically when cloud changes */
+  useEffect(() => {
+    setJson(TERRAFORM_SAMPLES[cloud]);
+  }, [cloud]);
 
   return (
     <div
@@ -40,7 +33,6 @@ export default function InputJson({ onAnalyze, loading = false }: Props) {
         padding: 20,
         marginBottom: 28,
         boxShadow: "var(--shadow-card)",
-        overflow: "hidden",
       }}
     >
       {/* Header */}
@@ -54,6 +46,7 @@ export default function InputJson({ onAnalyze, loading = false }: Props) {
         >
           Terraform Plan Input
         </h2>
+
         <p
           style={{
             marginTop: 6,
@@ -61,15 +54,27 @@ export default function InputJson({ onAnalyze, loading = false }: Props) {
             color: "var(--text-secondary)",
           }}
         >
-          Paste the Terraform <code>plan.json</code> output to analyze your cloud
-          architecture.
+          Paste the Terraform <code>plan.json</code> output or load a{" "}
+          <strong>{cloud.toUpperCase()}</strong> sample.
         </p>
       </div>
 
       {/* Textarea */}
       <textarea
         value={json}
-        onChange={(e) => setJson(e.target.value)}
+        onChange={(e) => {
+    const value = e.target.value;
+          setJson(value);
+          const detected = detectCloudFromTerraform(value);
+
+if (detected === "invalid") {
+  onDetectCloud?.("invalid" as any);
+} else if (detected && detected !== cloud) {
+  onDetectCloud?.(detected);
+}
+
+        }}
+        
         rows={14}
         spellCheck={false}
         style={{
@@ -84,15 +89,8 @@ export default function InputJson({ onAnalyze, loading = false }: Props) {
           padding: 14,
           borderRadius: 8,
           border: "1px solid var(--border-default)",
-          outline: "none",
           resize: "vertical",
         }}
-        onFocus={(e) =>
-          (e.currentTarget.style.borderColor = "var(--border-focus)")
-        }
-        onBlur={(e) =>
-          (e.currentTarget.style.borderColor = "var(--border-default)")
-        }
       />
 
       {/* Actions */}
@@ -106,7 +104,7 @@ export default function InputJson({ onAnalyze, loading = false }: Props) {
       >
         <button
           type="button"
-          onClick={() => setJson(SAMPLE_JSON)}
+          onClick={() => setJson(TERRAFORM_SAMPLES[cloud])}
           style={{
             background: "transparent",
             border: "none",
@@ -116,7 +114,7 @@ export default function InputJson({ onAnalyze, loading = false }: Props) {
             padding: 0,
           }}
         >
-          Load sample JSON
+          Load {cloud.toUpperCase()} sample
         </button>
 
         <button

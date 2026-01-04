@@ -2,7 +2,7 @@ namespace CloudAdvisor.RuleEngine.Models;
 
 public enum Severity
 {
-    Low,
-    Medium,
-    High
+    Low = 0,
+    Medium = 1,
+    High = 2
 }

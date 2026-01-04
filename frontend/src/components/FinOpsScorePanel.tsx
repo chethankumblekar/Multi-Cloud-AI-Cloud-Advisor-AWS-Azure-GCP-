@@ -17,41 +17,45 @@ export default function FinOpsScorePanel({
   riskLevel,
   summary,
 }: Props) {
+  const color = riskColorMap[riskLevel];
+
   return (
     <Card>
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "120px 1fr",
-          gap: 24,
+          display: "flex",
           alignItems: "center",
+          gap: 16,
         }}
       >
-        {/* KPI */}
+        {/* Score badge */}
         <div
           style={{
-            width: 120,
-            height: 120,
-            borderRadius: 16,
-            background: riskColorMap[riskLevel],
+            minWidth: 56,
+            height: 56,
+            borderRadius: 12,
+            background: color + "20", // soft tint
+            color: color,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            flexDirection: "column",
-            color: "#fff",
+            fontWeight: 700,
           }}
         >
-          <div style={{ fontSize: 32, fontWeight: 700 }}>{score}</div>
-          <div style={{ fontSize: 12, opacity: 0.9 }}>Cost Risk</div>
+          <div style={{ fontSize: 20 }}>{score}</div>
+          <div style={{ fontSize: 10, fontWeight: 500 }}>
+            Risk
+          </div>
         </div>
 
-        {/* Explanation */}
+        {/* Text */}
         <div>
           <div
             style={{
-              fontSize: 14,
+              fontSize: 12,
               color: "var(--text-secondary)",
-              marginBottom: 4,
+              marginBottom: 2,
             }}
           >
             FinOps Overview
@@ -59,16 +63,24 @@ export default function FinOpsScorePanel({
 
           <div
             style={{
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: 600,
-              marginBottom: 8,
-              color: riskColorMap[riskLevel],
+              color,
+              marginBottom: 4,
             }}
           >
-            {riskLevel} Cost Risk Detected
+            {riskLevel} Cost Risk
           </div>
 
-          <p style={{ color: "var(--text-secondary)", maxWidth: 700 }}>
+          <p
+            style={{
+              fontSize: 13,
+              color: "var(--text-secondary)",
+              margin: 0,
+              lineHeight: 1.4,
+              maxWidth: 520,
+            }}
+          >
             {summary}
           </p>
         </div>
@@ -76,4 +88,3 @@ export default function FinOpsScorePanel({
     </Card>
   );
 }
-

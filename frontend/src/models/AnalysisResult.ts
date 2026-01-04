@@ -1,3 +1,4 @@
+
 export interface AnalysisResult {
   environment: Environment;
   findings: Finding[];
@@ -5,35 +6,65 @@ export interface AnalysisResult {
   finOpsScore: FinOpsScore;
 }
 
+
 export interface Environment {
-  provider: number;
+  provider: CloudProvider;
   resources: CloudResource[];
 }
 
+export type CloudProvider = 0 | 1 | 2; // AWS | Azure | GCP
+
+
 export interface CloudResource {
-  security: any;
-  availability: any;
-  category: number;
   id: string;
   serviceName: string;
   sizeTier: string;
+  category: ResourceCategory;
+  availability: Availability;
+  security: Security;
 }
+
+export type ResourceCategory = 0 | 1 | 2 | 3; // Compute | Storage | Database | Network (etc)
+
+
+export interface Availability {
+  region: string;
+  isMultiZone: boolean;
+  availabilityZones?: number;
+}
+
+export interface Security {
+  publiclyAccessible: boolean;
+  encryptedAtRest?: boolean;
+  usesManagedIdentity?: boolean;
+}
+
 
 export interface Finding {
-  resource: any;
-  category: any;
+  resource: CloudResource;
+  category: RuleCategory;
   title: string;
   description: string;
-  severity: number;
+  severity: Severity;
 }
 
+export type RuleCategory = number; // keep numeric to match backend enum
+export type Severity = 0 | 1 | 2; // Low | Medium | High
+
+
 export interface AiExplanation {
-  summary: string;
-  recommendation: string;
+  markdown: string; // single source of truth
 }
+
 
 export interface FinOpsScore {
   score: number;
   riskLevel: "Low" | "Medium" | "High";
   summary: string;
+}
+
+export interface CloudOption {
+  key: "aws" | "azure" | "gcp";
+  label: string;
+  icon: string;
 }
