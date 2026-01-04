@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Cloud = "aws" | "azure" | "gcp" | "invalid" | null;
 
 export function detectCloudFromTerraform(json: string): Cloud {
