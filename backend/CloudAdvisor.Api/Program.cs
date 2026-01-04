@@ -1,3 +1,15 @@
+using CloudAdvisor.Ai.Clients;
+using CloudAdvisor.Ai.Interfaces;
+using CloudAdvisor.Parsers;
+using CloudAdvisor.Parsers.Aws;
+using CloudAdvisor.Parsers.Azure;
+using CloudAdvisor.Parsers.Factory;
+using CloudAdvisor.Parsers.Gcp;
+using CloudAdvisor.RuleEngine;
+using CloudAdvisor.RuleEngine.Interfaces;
+using CloudAdvisor.RuleEngine.Rules.Cost;
+using CloudAdvisor.RuleEngine.Rules.HighAvailability;
+using CloudAdvisor.RuleEngine.Rules.Security;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +20,20 @@ builder.Host.UseSerilog((ctx, lc) =>
 
 // ---------- Services ----------
 builder.Services.AddControllers();
-builder.Services.AddScoped<ICloudParser, AwsTerraformParser>();
+builder.Services.AddScoped<AwsTerraformParser>();
+builder.Services.AddScoped<AzureTerraformParser>();
+builder.Services.AddScoped<GcpTerraformParser>();
+builder.Services.AddScoped<ICloudParserFactory, CloudParserFactory>();
+builder.Services.AddScoped<IRule, SingleZoneComputeRule>();
+builder.Services.AddScoped<IRule, OversizedComputeRule>();
+builder.Services.AddScoped<IRule, PublicComputeRule>();
+builder.Services.AddScoped<IRule, IdleComputeRule>();
+builder.Services.AddScoped<IRule, OverReplicatedStorageRule>();
+
+builder.Services.AddSingleton<IAiClient>(_ =>
+    new OpenAiClient(builder.Configuration["OpenAI:ApiKey"]!));
+
+builder.Services.AddScoped<RuleEngine>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

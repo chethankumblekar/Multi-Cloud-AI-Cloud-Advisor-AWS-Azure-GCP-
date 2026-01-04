@@ -2,8 +2,8 @@ namespace CloudAdvisor.Common.Enums;
 
 public enum ResourceCategory
 {
-    Compute,
-    Storage,
-    Database,
-    Network
+    Compute = 0,
+    Storage = 1,
+    Database = 2,
+    Network = 3
 }

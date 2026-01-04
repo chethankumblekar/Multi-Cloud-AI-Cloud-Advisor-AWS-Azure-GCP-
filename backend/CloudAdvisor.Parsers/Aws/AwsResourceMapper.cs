@@ -1,6 +1,6 @@
 using CloudAdvisor.Common.Enums;
 using CloudAdvisor.Common.Models;
-using CloudAdvisor.Parsers.Aws.Models;
+using CloudAdvisor.Parsers.Terraform.Models;
 
 namespace CloudAdvisor.Parsers.Aws;
 

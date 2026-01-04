@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\CloudAdvisor.Common\CloudAdvisor.Common.csproj" />
+    <PackageReference Include="System.Text.Json" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="10.0.1" />
+    <ProjectReference Include="..\CloudAdvisor.Common\CloudAdvisor.Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -13,5 +13,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
 
 </Project>

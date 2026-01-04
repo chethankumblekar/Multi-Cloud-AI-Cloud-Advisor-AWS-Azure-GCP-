@@ -1,0 +1,23 @@
+{
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "type": "google_compute_instance",
+          "name": "gcp-vm-cloud-advisor",
+          "values": {
+            "machine_type": "e2-medium",
+            "zone": "us-central1-a"
+          }
+        },
+        {
+          "type": "google_storage_bucket",
+          "name": "cloud-advisor-bucket-12345",
+          "values": {
+            "location": "US"
+          }
+        }
+      ]
+    }
+  }
+}

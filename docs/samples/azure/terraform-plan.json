@@ -1,0 +1,16 @@
+{
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "type": "azurerm_linux_virtual_machine",
+          "name": "vm1",
+          "values": {
+            "size": "Standard_B2s",
+            "location": "eastus"
+          }
+        }
+      ]
+    }
+  }
+}
